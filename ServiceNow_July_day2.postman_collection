@@ -1,0 +1,697 @@
+{
+	"info": {
+		"_postman_id": "6fc4c2d6-a29a-4431-8f8d-104745053750",
+		"name": "ServiceNow_July",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "incident",
+			"item": [
+				{
+					"name": "Get All Incidents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident?sysparm_fields=number,short_description,state,sys_id&sysparm_limit=10",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,short_description,state,sys_id"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "10"
+								},
+								{
+									"key": "number",
+									"value": "INC0000060",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create an incident",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\" : \"INC0011593\",\r\n    \"sys_id\" : \"123213sadasdfsa\"\r\n}"
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create an incident without body",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update existing record",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\" : \"update desc using patch\" ,   \r\n\"state\" : \"3\"\r\n}"
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident/46b66a40a9fe198101f243dfbc79033d",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident",
+								"46b66a40a9fe198101f243dfbc79033d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete existing record",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident/1c741bd70b2322007518478d83673af3\n",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident",
+								"1c741bd70b2322007518478d83673af3\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update existing record using put",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\" : \"update desc using put\" ,   \r\n\"state\" : \"-5\"\r\n}"
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/incident/123213sadasdfsa",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident",
+								"123213sadasdfsa"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Incident Chaining",
+			"item": [
+				{
+					"name": "Get All Incidents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "88cc717c-fae3-4652-8d5d-684ce854aec1",
+								"exec": [
+									"var resp = pm.response.json();\r",
+									"\r",
+									"console.log(resp);\r",
+									"\r",
+									"var count = resp.result.length;\r",
+									"\r",
+									"\r",
+									"\r",
+									"var random = Math.floor(Math.random()*count);\r",
+									"\r",
+									"console.log(resp.result[random].sys_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}?sysparm_fields=number,short_description,state,sys_id&sysparm_limit=10",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,short_description,state,sys_id"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "10"
+								},
+								{
+									"key": "number",
+									"value": "INC0000060",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create an incident without body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "54c8fa5d-8624-41cf-a6e1-bdb09cfcc5bf",
+								"exec": [
+									"//step1: get the reponse in json format\r",
+									"var resp = pm.response.json();\r",
+									"\r",
+									"//step2: get sys_id from the response\r",
+									"var id = resp.result.sys_id\r",
+									"\r",
+									"//step3: assign the value to the global variable\r",
+									"pm.globals.set(\"inc_sys_id\", id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}?sysparm_fields=number,sys_id,short_description,state&sysparm_limit=10",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,sys_id,short_description,state"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update existing record",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\" : \"update desc using patch\" ,   \r\n\"state\" : \"3\"\r\n}"
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}/{{inc_sys_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}",
+								"{{inc_sys_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete existing record",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/incident/{{inc_sys_id}}\n",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"incident",
+								"{{inc_sys_id}}\n"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ChangeRequest",
+			"item": [
+				{
+					"name": "Get All Change Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request?sysparm_fields=number,state,type,short_description&sysparm_limit=20",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,state,type,short_description"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create change request using json",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"short_description\":\"create using json\",\r\n     \"type\":\"normal\"\r\n}"
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update change request using json",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"short_description\":\"update using patch\"\r\n}"
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request/ae20f2fd2fbd5010262557892799b612",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request",
+								"ae20f2fd2fbd5010262557892799b612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update change request using json Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request/ae20f2fd2fbd5010262557892799b612",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request",
+								"ae20f2fd2fbd5010262557892799b612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create change request without body",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create change request using xml",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<request>\r\n    <entry>\r\n        <short_description>create using xml</short_description>\r\n        <state>-5</state>\r\n    </entry>\r\n</request>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev92834.service-now.com/api/now/table/change_request",
+							"protocol": "https",
+							"host": [
+								"dev92834",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cc9f2f32-f565-44f3-99d4-1cfed87b10ed",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "043012df-dc30-4cf4-b578-47d9cffe181b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "India@123",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "398a7094-1522-44b3-9618-4b31abab5d26",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ddd73266-d32f-49ea-a405-9ceb25cb7939",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5fd689d2-fd3b-4d1b-bc38-2e893b2103a8",
+			"key": "table",
+			"value": "incident"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
