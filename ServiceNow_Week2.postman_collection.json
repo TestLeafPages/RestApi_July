@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "2e1e03d4-526f-4684-b767-0b70fb6f4547",
+		"name": "ServiceNow_Week2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Incident Chaining",
+			"item": [
+				{
+					"name": "create an incident without body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29bae055-3939-4d44-83a7-e7f99ad957cc",
+								"exec": [
+									"//step1: get the reponse in json format\r",
+									"var resp = pm.response.json();\r",
+									"\r",
+									"//step2: get sys_id from the response\r",
+									"var id = resp.result.sys_id\r",
+									"\r",
+									"\r",
+									"//step3: assign the value to the global variable\r",
+									"pm.globals.set(\"inc_sys_id\", id);\r",
+									"\r",
+									"pm.test(\"Veify status code as 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}?sysparm_fields=number,sys_id,short_description,state",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,sys_id,short_description,state"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create data using json body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24ac7fdf-982d-4354-991f-cf4e78b91ae9",
+								"exec": [
+									"console.log(pm.response.json());\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"short desc validation\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"  //  pm.expect(jsonData.result.short_description).to.eql(\"created from postman\");\r",
+									"    pm.expect(jsonData.result.state).to.eql(\"3\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "788b0a19-c4bc-4d40-b4f5-53a99b96f80b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n   \"short_description\" : \"{{short_desc}}\",\r\n   \"state\" : \"{{state}}\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}?sysparm_fields=number,sys_id,short_description,state",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,sys_id,short_description,state"
+								},
+								{
+									"key": "sysparm_limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update existing record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3176ee03-052d-4955-8ed9-30af4a5877e7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\" : \"update desc using patch\" ,   \r\n\"state\" : \"2\"\r\n}"
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}/{{inc_sys_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}",
+								"{{inc_sys_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete existing record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0179b047-4306-42ef-99d9-cd705c284cf2",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f8f75406-0a18-4cb9-bf29-94b510b940a2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/api/now/table/{{table}}/{{inc_sys_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"{{table}}",
+								"{{inc_sys_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "hsbQhddf8WvSmqEoOfqW45mJBcPwHgh7jR0fz7YT6oJa2Yx90qlJwOW0fzYCKDvzfGD2RS99TOpvZuudCM7Gdw",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bc8966a1-81ab-47fa-abb2-26377e79d2df",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2c63f8b2-ca4a-46bf-bc92-889a1a784f9b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e9753aba-852f-439b-a515-a58cbae55e24",
+			"key": "table",
+			"value": "incident"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
