@@ -1,0 +1,11 @@
+Newman installation:
+
+1. Install NodeJS using installer (.msi) 
+2. Verify the version in cmd line node -v
+3. Install newman - npm install -g newman
+4. Verify newman version as  - newman -v
+5. install htmlextra report as npm install -g newman-reporter-htmlextra
+6. Export the collection, global, environment 
+7. newman run collection_file -e environment_file -g global_file -n 2
+8. newman run collection_file -e environment_file -g global_file -n 2 -d datafile -r htmlextra
+
